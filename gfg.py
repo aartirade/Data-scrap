@@ -2,7 +2,6 @@ import requests
 from bs4 import BeautifulSoup
 import re
 
-
 username = "aartirade"
 
 response = requests.get(f"https://auth.geeksforgeeks.org/user/{username}/practice/", headers={
@@ -16,6 +15,9 @@ if response.status_code != 200:
 soup = BeautifulSoup(response.content, "html.parser")
 
 problem_elements = soup.find_all("li", {"class": "tab"})
+get_data = soup.find_all("span", {"class": "score_card_value"})
+
+x = (str(get_data).split())
 y = str(problem_elements)
 
 sentences = y.split()
@@ -29,6 +31,10 @@ easy_match = re.findall(r'EASY\d+', formatted_str1)
 medium = re.findall(r'\d+', str(medium_match))
 hard = re.findall(r'\d+', str(hard_match))
 easy = re.findall(r'\d+', str(easy_match))
+get_score_value = re.findall(r'\d+', x[1])
+get_problem_solved = re.findall(r'\d+', x[3])
 print(f"Number of medium problems solved by {username}:", *medium)
 print(f"Number of hard problems solved by {username}:", *hard)
 print(f"Number of easy problems solved by {username}:", *easy)
+print(f"Number of problems solved by {username}:", *get_problem_solved)
+print(f"Overall Coding score of {username} is:", *get_score_value)
